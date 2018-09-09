@@ -8,3 +8,8 @@ using the ancient ghostscript library
 ```
 brew install gs
 ```
+
+using mactex
+```
+brew cask install mactex
+```
