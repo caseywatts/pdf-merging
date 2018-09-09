@@ -96,9 +96,7 @@ function tsvToObject (tsv) {
   var obj = {}
 
   lines.forEach((line) => {
-    [name, number] = line.split('\t')
-    console.log(`name: ${name}`)
-    console.log(`number: ${number}`)
+    const [name, number] = line.split('\t')
     obj[name] = number
   })
 
