@@ -25,8 +25,10 @@ const numberForEachInstrument = tsvToObject(instrumentsTSV)
 
 const inputFiles = gatherInputFiles();
 const inputFilesWithDuplicates = duplicateFilesAppropriately(inputFiles)
-const duplicatedFilenamesString = joinFilenames(inputFilesWithDuplicates)
-mergePDFs(duplicatedFilenamesString)
+const inputFilesWithDuplicatesString = joinFilenames(inputFilesWithDuplicates)
+mergePDFs(inputFilesWithDuplicatesString)
+
+
 
 function duplicateFilesAppropriately(inputFiles) {
   return inputFiles.reduce((collection, file) => {
