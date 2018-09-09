@@ -1,4 +1,4 @@
-const shell = require('shelljs');
+const shell = require('shelljs')
 
 const instrumentsTSV = `Alto_Saxophone	4
 Baritone_Horn	5
@@ -23,26 +23,24 @@ Wood_Blocks	1`
 
 const numberForEachInstrument = tsvToObject(instrumentsTSV)
 
-const inputFiles = gatherInputFiles();
+const inputFiles = gatherInputFiles()
 const inputFilesWithDuplicates = duplicateFilesAppropriately(inputFiles)
 const inputFilesWithDuplicatesString = joinFilenames(inputFilesWithDuplicates)
 mergePDFs(inputFilesWithDuplicatesString)
 
-
-
-function duplicateFilesAppropriately(inputFiles) {
+function duplicateFilesAppropriately (inputFiles) {
   return inputFiles.reduce((collection, file) => {
     const instrument = getInstrument(file)
 
     console.log(`going to print ${instrument.numberOfCopies} for ${instrument.name}`)
-    doXTimes(instrument.numberOfCopies, function() {
+    doXTimes(instrument.numberOfCopies, function () {
       collection.push(file)
     })
-    return collection;
+    return collection
   }, [])
 }
 
-function getInstrument(file) {
+function getInstrument (file) {
   function whichInstrument (file) {
     const foundInstrumentName = Object.keys(numberForEachInstrument).find((instrument) => {
       return file.includes(instrument)
@@ -53,11 +51,11 @@ function getInstrument(file) {
       console.log(`no instrument name match for ${file}`)
     }
   }
-  function numberForInstrument(instrumentName) {
+  function numberForInstrument (instrumentName) {
     if (numberForEachInstrument[instrumentName]) {
       return numberForEachInstrument[instrumentName]
     } else {
-      console.log(`how many for ${instrumentName}?`);
+      console.log(`how many for ${instrumentName}?`)
       return 1
     }
   }
@@ -70,39 +68,39 @@ function getInstrument(file) {
   }
 }
 
-function gatherInputFiles() {
-  return shell.find('.').filter(function(file) {
-    return file.match(/\.pdf$/) && !file.match(/.*Score.*/)&& !file.match(/.*output.*/);
-  });
+function gatherInputFiles () {
+  return shell.find('.').filter(function (file) {
+    return file.match(/\.pdf$/) && !file.match(/.*Score.*/) && !file.match(/.*output.*/)
+  })
 }
 
-function joinFilenames(files) {
-  return files.map((f) => `"${f}"`).join(' ');
+function joinFilenames (files) {
+  return files.map((f) => `"${f}"`).join(' ')
 }
 
-function mergePDFs(pdfs) {
-  const command = `gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=output.pdf -dBATCH ${pdfs}`;
+function mergePDFs (pdfs) {
+  const command = `gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=output.pdf -dBATCH ${pdfs}`
   console.log(`======\n======\n======\n======\n======\n======\n======\n======\n======`)
   console.log(command)
   shell.exec(command)
 }
 
-function doXTimes(xTimes, f) {
+function doXTimes (xTimes, f) {
   Array.from(Array(xTimes)).forEach(() => {
-    f();
+    f()
   })
 };
 
-function tsvToObject(tsv) {
-  var lines=tsv.split("\n");
-  var obj = {};
+function tsvToObject (tsv) {
+  var lines = tsv.split('\n')
+  var obj = {}
 
   lines.forEach((line) => {
-    [name, number] = line.split("\t");
+    [name, number] = line.split('\t')
     console.log(`name: ${name}`)
     console.log(`number: ${number}`)
     obj[name] = number
   })
 
-  return obj; //JSON
+  return obj // JSON
 }
