@@ -1,5 +1,6 @@
 const shell = require('shelljs')
 
+/* eslint-disable no-tabs */
 const instrumentsTSV = `Alto_Saxophone	4
 Baritone_Horn	5
 Bass_Guitar	1
@@ -20,6 +21,7 @@ Bass	3
 Snare	2
 Tenor_Drum	1
 Wood_Blocks	1`
+/* eslint-enable no-tabs */
 
 const numberForEachInstrument = tsvToObject(instrumentsTSV)
 
